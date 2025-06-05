@@ -1,29 +1,43 @@
-name: PR Agent
+# name: PR Agent
+
+# on:
+#   pull_request:
+#     types: [opened, synchronize, reopened]
+
+# jobs:
+#   run-pr-agent:
+#     runs-on: self-hosted
+
+#     container:
+#       image: anhdt8490/pr-ai-agent:latest
+#       options: --entrypoint ""
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v3
+
+#       - name: Run PR Agent
+#         run: |
+#           export PR_URL="${{ github.event.pull_request.html_url }}"
+#           export config__git_provider="github"
+#           export github__token="${{ secrets.GITHUB_TOKEN }}"
+#           export openai__key="${{ secrets.OPENAI_KEY }}"
+#           export openai__api_base="${{ secrets.OPENAI_API_BASE }}"
+
+#           python -m pr_agent.cli --pr_url="$PR_URL" describe
+#           python -m pr_agent.cli --pr_url="$PR_URL" review -i
+#           python -m pr_agent.cli --pr_url="$PR_URL" improve
+name: Test Self-hosted Runner
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - main
 
 jobs:
-  run-pr-agent:
+  test-run:
     runs-on: self-hosted
 
-    container:
-      image: anhdt8490/pr-ai-agent:latest
-      options: --entrypoint ""
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Run PR Agent
-        run: |
-          export PR_URL="${{ github.event.pull_request.html_url }}"
-          export config__git_provider="github"
-          export github__token="${{ secrets.GITHUB_TOKEN }}"
-          export openai__key="${{ secrets.OPENAI_KEY }}"
-          export openai__api_base="${{ secrets.OPENAI_API_BASE }}"
-
-          python -m pr_agent.cli --pr_url="$PR_URL" describe
-          python -m pr_agent.cli --pr_url="$PR_URL" review -i
-          python -m pr_agent.cli --pr_url="$PR_URL" improve
+      - name: Say Hello
+        run: echo "🎉 Runner đang hoạt động!"
